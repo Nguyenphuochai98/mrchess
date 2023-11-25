@@ -41,17 +41,22 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         height: DimensManager.dimens.setHeight(20),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                        padding:
-                            EdgeInsets.all(DimensManager.dimens.setWidth(30)),
-                        child: Icon(
-                          Icons.photo_camera_outlined,
-                          size: DimensManager.dimens.setSp(36),
-                          color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          controller.getImage();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          padding:
+                              EdgeInsets.all(DimensManager.dimens.setWidth(30)),
+                          child: Icon(
+                            Icons.photo_camera_outlined,
+                            size: DimensManager.dimens.setSp(36),
+                            color: Colors.white,
+                          ),
                         ),
                       )
                     ],
