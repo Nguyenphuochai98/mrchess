@@ -161,6 +161,7 @@ class HomeView extends GetView<HomeController> {
             padding: EdgeInsets.symmetric(
                 horizontal: DimensManager.dimens.setWidth(10)),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: DimensManager.dimens.setHeight(10),
@@ -171,6 +172,15 @@ class HomeView extends GetView<HomeController> {
                     height: 3,
                     color: Colors.white,
                   ),
+                ),
+                SizedBox(
+                  height: DimensManager.dimens.setHeight(20),
+                ),
+                UIText(
+                  'Order history',
+                  size: DimensManager.dimens.setSp(20),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
                 SizedBox(
                   height: DimensManager.dimens.setHeight(20),
