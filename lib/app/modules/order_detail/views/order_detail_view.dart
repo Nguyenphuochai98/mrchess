@@ -133,10 +133,8 @@ class OrderDetailView extends GetView<OrderDetailController> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(dimen.setRadius(30)),
-                      border:
-                      Border.all(color: UIColors.primary, width: 1)),
+                      borderRadius: BorderRadius.circular(dimen.setRadius(30)),
+                      border: Border.all(color: UIColors.primary, width: 1)),
                   padding: EdgeInsets.symmetric(
                       vertical: dimen.setHeight(10),
                       horizontal: dimen.setWidth(20)),
@@ -144,13 +142,41 @@ class OrderDetailView extends GetView<OrderDetailController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      UIText('Cash Back Process', color: UIColors.primary, size: dimen.setSp(20), fontWeight: FontWeight.bold,)
+                      UIText(
+                        'Cash Back Process',
+                        color: UIColors.primary,
+                        size: dimen.setSp(20),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      SizedBox(
+                        height: dimen.setHeight(20),
+                      ),
+                      //chỗ này truyền vào thời gian thôi, title giữ nguyên
+                      _buildText('Shopping', '22-08-2023, 22:31'),
+                      _buildText('Successful confirmation', '22-08-2023, 22:31'),
+                      _buildText('Cash back', '22-08-2023, 22:31'),
                     ],
                   ),
                 )
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+  Widget _buildText(String tile, String time) {
+    final dimen = DimensManager.dimens;
+    return Padding(
+      padding: EdgeInsets.only(bottom: dimen.setHeight(15)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UIText(tile, color: UIColors.textLight, fontWeight: FontWeight.bold,),
+          SizedBox(
+            height: dimen.setHeight(10),
+          ),
+          UIText(time, color: UIColors.textLight, ),
         ],
       ),
     );
