@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/home/views/search_result_view.dart';
+import '../modules/order_detail/bindings/order_detail_binding.dart';
+import '../modules/order_detail/views/order_detail_view.dart';
 import '../modules/search_result/bindings/search_result_binding.dart';
 import '../modules/search_result/views/search_result_view.dart';
 import '../modules/take_photo/bindings/take_photo_binding.dart';
@@ -13,7 +15,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.ORDER_DETAIL;
 
   static final routes = [
     GetPage(
@@ -30,6 +32,11 @@ class AppPages {
       name: _Paths.SEARCH_RESULT,
       page: () => const SearchResultView(),
       binding: SearchResultBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_DETAIL,
+      page: () => const OrderDetailView(),
+      binding: OrderDetailBinding(),
     ),
   ];
 }
