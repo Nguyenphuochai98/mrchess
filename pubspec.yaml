@@ -11,7 +11,8 @@ dependencies:
   chat_gpt_sdk: ^2.2.5
   camera: ^0.10.5+5
   http: ^0.13.4
-  flutter: 
+  url_launcher: ^6.2.1
+  flutter:
     sdk: flutter
 
 dev_dependencies: 
