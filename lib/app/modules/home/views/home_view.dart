@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mrchess/app/constant/dimens_manager.dart';
 import 'package:mrchess/app/utils/app_colors.dart';
 import 'package:mrchess/app/utils/asset_images.dart';
+import 'package:mrchess/app/widgets/ui_rich_text.dart';
 
 import '../../../constant/constants.dart';
 import '../../../widgets/ui_text.dart';
@@ -126,19 +127,19 @@ class HomeView extends GetView<HomeController> {
                                         'It is a long established fact that a reader will be distracted by the readable content',
                                         color: Colors.white,
                                         size: DimensManager.dimens.setSp(18),
-                                        fontWeight: FontWeight.bold,
                                         maxLines: 2,
                                       ),
                                       SizedBox(
                                         height:
                                             DimensManager.dimens.setHeight(5),
                                       ),
-                                      UIText(
-                                        'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book',
-                                        color: UIColors.textDartLight,
-                                        size: DimensManager.dimens.setSp(14),
-                                        maxLines: 3,
-                                      ),
+                                      Row(
+                                        children: [
+                                          const UIText('Cash back', color: Colors.white, size: 12,),
+                                          SizedBox(width: DimensManager.dimens.setWidth(10),),
+                                          const UIRichText(text: '32.000', size: 16,)
+                                        ],
+                                      )
                                     ],
                                   ))
                             ],
@@ -190,10 +191,10 @@ class HomeView extends GetView<HomeController> {
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 7/8),
                     itemBuilder: (_, index) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -209,41 +210,30 @@ class HomeView extends GetView<HomeController> {
                         ),
                         UIText(
                           'It is a long established fact that a reader will be distracted by the readable content',
-                          color: Colors.white,
-                          size: DimensManager.dimens.setSp(14),
-                          fontWeight: FontWeight.bold,
-                          maxLines: 1,
-                        ),
-                        SizedBox(
-                          height: DimensManager.dimens.setHeight(5),
-                        ),
-                        UIText(
-                          'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book',
                           color: UIColors.textDartLight,
-                          size: DimensManager.dimens.setSp(10),
+                          size: DimensManager.dimens.setSp(14),
                           maxLines: 2,
                         ),
                         SizedBox(
                           height: DimensManager.dimens.setHeight(5),
                         ),
-                        RichText(
-                            text: TextSpan(
-                          text: '4.000.000 ',
-                          style: TextStyle(
-                            fontFamily: Fonts.nunito,
-                            fontWeight: FontWeight.bold,
-                            fontSize: DimensManager.dimens.setSp(15),
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'đ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: DimensManager.dimens.setSp(15)),
+                        UIRichText(
+                          text: '4.000.000',
+                          color: UIColors.textDartLight,
+                          size: 12,
+                        ),
+                        Row(
+                          children: [
+                            const UIText('Cash back', color: Colors.white, size: 14,),
+                            SizedBox(
+                              width: DimensManager.dimens.setWidth(10),
+                            ),
+                            const UIRichText(
+                              text: '32.000',
+                              size: 14,
                             ),
                           ],
-                        ))
+                        )
                       ],
                     ),
                   ),
@@ -255,7 +245,8 @@ class HomeView extends GetView<HomeController> {
               height: _panelMinSize,
               color: UIColors.backgroundLight,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: DimensManager.dimens.setWidth(10)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: DimensManager.dimens.setWidth(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
