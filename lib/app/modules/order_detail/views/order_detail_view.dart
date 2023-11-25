@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:mrchess/app/constant/dimens_manager.dart';
 import 'package:mrchess/app/utils/app_colors.dart';
-import 'package:mrchess/app/utils/asset_images.dart';
-import 'package:mrchess/app/utils/assets_icons.dart';
-import 'package:mrchess/app/widgets/ui_rich_text.dart';
+import 'package:mrchess/app/widgets/item_components.dart';
 import 'package:mrchess/app/widgets/ui_text.dart';
 
-import '../../../constant/constants.dart';
+import '../../home/provider/item_model.dart';
 import '../controllers/order_detail_controller.dart';
 
 class OrderDetailView extends GetView<OrderDetailController> {
@@ -16,167 +13,153 @@ class OrderDetailView extends GetView<OrderDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    DimensManager();
-    final dimen = DimensManager.dimens;
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.8),
       body: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(dimen.setRadius(30)),
-                bottomLeft: Radius.circular(dimen.setRadius(30))),
-            child: Image.asset(
-              AssetImages.living,
-              width: double.infinity,
-              height: dimen.setHeight(400),
-              fit: BoxFit.fill,
-            ),
-          ),
-          SizedBox(
-            height: dimen.setHeight(10),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: dimen.setWidth(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          Expanded(
+            flex: 2,
+            child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(40),
+                        bottomLeft: Radius.circular(40)),
+                    color: UIColors.primary),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
+                    SafeArea(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                        child: Row(
                           children: [
-                            WidgetSpan(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Image.asset(
-                                  AssetIcons.iconShopee,
-                                  width: 20,
-                                ),
-                              ),
-                            ),
-                            TextSpan(
-                              //tên sản phầm
-                              text:
-                                  'Ấm Siêu Tốc Inox 1,8 Lít Đun Sôi Cực Nhanh - Bình siêu tốc inox tốt cho sức khỏe người sử dụng - ST2 New Hot',
-                              style: TextStyle(
-                                color: UIColors.textLight,
-                                letterSpacing: 0.75,
-                                fontFamily: Fonts.nunito,
-                                height: 1.25,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
+                            Icon(Icons.arrow_back_ios, color: Colors.white),
+                            Spacer(),
+                            Icon(Icons.home, color: Colors.white),
                           ],
                         ),
                       ),
                     ),
-                    Stack(
-                      alignment: Alignment.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          AssetIcons.iconCashBack,
-                          width: dimen.setWidth(64),
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
                         ),
-                        Positioned(
-                          top: 10,
-                          child: UIText(
-                            //% cash back
-                            '5%',
-                            color: UIColors.primary,
-                            fontWeight: FontWeight.bold,
-                            size: dimen.setSp(16),
-                          ),
-                        )
+                        SizedBox(
+                          width: 6,
+                        ),
+                        UIText(
+                          'Successful',
+                          color: Colors.white,
+                          size: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: dimen.setHeight(10),
-                ),
-
-                //Giá tiền gốc
-                UIRichText(
-                  text: '4.000.000',
-                  color: UIColors.primary,
-                  size: dimen.setSp(24),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    UIText('Cash back'),
-                    SizedBox(
-                      width: dimen.setWidth(10),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(dimen.setRadius(30)),
-                          border:
-                              Border.all(color: UIColors.primary, width: 1)),
-                      padding: EdgeInsets.symmetric(
-                          vertical: dimen.setHeight(10),
-                          horizontal: dimen.setWidth(20)),
-                      child: UIRichText(
-                        text: '32.000',
-                        color: UIColors.primary,
-                      ),
-                    )
+                    SizedBox(
+                      height: 6,
+                    ),
+                    UIText(
+                      'Your order has been successfully paid and is currently in the process of being refunded.',
+                      color: Colors.white,
+                      maxLines: 3,
+                      textAlign: TextAlign.center,
+                    ),
+                    Spacer(),
                   ],
-                ),
-                SizedBox(
-                  height: dimen.setHeight(20),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(dimen.setRadius(30)),
-                      border: Border.all(color: UIColors.primary, width: 1)),
-                  padding: EdgeInsets.symmetric(
-                      vertical: dimen.setHeight(10),
-                      horizontal: dimen.setWidth(20)),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      UIText(
-                        'Cash Back Process',
-                        color: UIColors.primary,
-                        size: dimen.setSp(20),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      SizedBox(
-                        height: dimen.setHeight(20),
-                      ),
-                      //chỗ này truyền vào thời gian thôi, title giữ nguyên
-                      _buildText('Shopping', '22-08-2023, 22:31'),
-                      _buildText('Successful confirmation', '22-08-2023, 22:31'),
-                      _buildText('Cash back', '22-08-2023, 22:31'),
-                    ],
+                )),
+          ),
+          const SizedBox(height: 10,),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                color: UIColors.shopee,
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 36, vertical: 5),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 6,
                   ),
-                )
-              ],
+                  UIText(
+                    'Order Shopee ID',
+                    color: Colors.white,
+                    size: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  UIText(
+                    'Total amount: 1.000.000 VND',
+                    color: Colors.white,
+                    size: 12,
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  UIText(
+                    'Total amount: 1.000.000',
+                    color: Colors.white,
+                    size: 12,
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  UIText(
+                    'Cash Back: 70.000VND(7%)',
+                    color: Colors.white,
+                    size: 12,
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-  Widget _buildText(String tile, String time) {
-    final dimen = DimensManager.dimens;
-    return Padding(
-      padding: EdgeInsets.only(bottom: dimen.setHeight(15)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          UIText(tile, color: UIColors.textLight, fontWeight: FontWeight.bold,),
-          SizedBox(
-            height: dimen.setHeight(10),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: Divider(
+                      color: UIColors.textLight,
+                      height: 36,
+                    )),
+              ),
+              UIText("Sucgestion For you", color: UIColors.primary),
+              Expanded(
+                child: Container(
+                    margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: Divider(
+                      color: UIColors.textLight,
+                      height: 36,
+                    )),
+              ),
+            ],
           ),
-          UIText(time, color: UIColors.textLight, ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 5 / 8),
+                  itemBuilder: (BuildContext context, int index) =>
+                      const ItemComponent()),
+            ),
+            flex: 4,
+          )
         ],
       ),
     );

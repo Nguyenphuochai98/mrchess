@@ -10,6 +10,9 @@ class UIColors {
   static final Color defaultColorButton = HexColor.fromHex("#1e90ff");
   static final Color backgroundLight = HexColor.fromHex("#34495e");
   static final Color textDartLight = HexColor.fromHex("#ecf0f1");
+  static final Color greenBackground = HexColor.fromHex("#69b746");
+  static final Color neutral = HexColor.fromHex("#5D6B70");
+  static final Color shopee = HexColor.fromHex("#ea4d2f");
 }
 
 extension HexColor on Color {

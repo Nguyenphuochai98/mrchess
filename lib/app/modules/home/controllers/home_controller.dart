@@ -13,7 +13,7 @@ class HomeController extends GetxController {
   TextEditingController textEditingController = TextEditingController();
   UserProvider userProvider = UserProvider();
   RxBool isLoading = false.obs;
-
+  Rx<List<Uint8List>> scans = Rx<List<Uint8List>>([]);
 
   Future<void> getImage()async {
     isLoading.value = true;
@@ -21,23 +21,37 @@ class HomeController extends GetxController {
     Uint8List bytes = await file.readAsBytes();
     ProductResponse? dataResponse = await userProvider.getImage(bytes);
     if(dataResponse != null){
+      userProvider.saveScans(bytes);
+      scans.value = await userProvider.getScans();
       await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
     }
-
     isLoading.value = false;
   }
 
+  // Future<void> findImage()async {
+  //   ProductResponse? dataResponse = await userProvider.getImage(scans.value[0]);
+  //   if(dataResponse != null){
+  //     scans.value = await userProvider.getScans();
+  //     await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
+  //   }
+  //   isLoading.value = false;
+  // }
+
+
+
   final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    scans.value = await userProvider.getScans();
+
   }
 
   @override
   void onReady() {
     super.onReady();
   }
-
+  
   @override
   void onClose() {
     super.onClose();

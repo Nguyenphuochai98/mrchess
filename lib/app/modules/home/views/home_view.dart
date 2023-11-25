@@ -6,6 +6,7 @@ import 'package:mrchess/app/utils/app_colors.dart';
 import 'package:mrchess/app/utils/asset_images.dart';
 import 'package:mrchess/app/widgets/ui_rich_text.dart';
 
+import '../../../widgets/item_components.dart';
 import '../../../widgets/ui_text.dart';
 import '../controllers/home_controller.dart';
 import 'package:we_slide/we_slide.dart';
@@ -16,175 +17,131 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     const double _panelMinSize = 80.0;
-    final double _panelMaxSize = MediaQuery.of(context).size.height;
+    final double _panelMaxSize = MediaQuery
+        .of(context)
+        .size
+        .height - 50;
     DimensManager();
     return Scaffold(
-      backgroundColor: UIColors.backgroundBlueNights,
-      body: SafeArea(
-          child: Obx(
-        () => controller.isLoading.value
+      backgroundColor: Colors.white.withOpacity(0.8),
+      body: Obx(
+            () =>
+        controller.isLoading.value
             ? const Center(child: CircularProgressIndicator())
             : WeSlide(
-                panelMinSize: _panelMinSize,
-                panelMaxSize: _panelMaxSize,
-                isUpSlide: true,
-                body: Container(
-                  color: UIColors.backgroundBlueNights,
+          panelMinSize: _panelMinSize,
+          panelMaxSize: _panelMaxSize,
+          isUpSlide: true,
+          body: Container(
+            color: Colors.white.withOpacity(0.8),
+            child: Column(
+              children: [
+                Flexible(
+                  flex: 8,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Flexible(
-                        flex: 8,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const UIText(
-                              'Tap on the Camera',
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: DimensManager.dimens.setHeight(20),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                controller.getImage();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  shape: BoxShape.circle,
-                                ),
-                                padding: EdgeInsets.all(
-                                    DimensManager.dimens.setWidth(30)),
-                                child: Icon(
-                                  Icons.photo_camera_outlined,
-                                  size: DimensManager.dimens.setSp(36),
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        flex: 3,
+                      GestureDetector(
+                        onTap: () {
+                          controller.getImage();
+                        },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: DimensManager.dimens.setWidth(20),
-                            vertical: DimensManager.dimens.setHeight(10),
-                          ),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                DimensManager.dimens.setRadius(20)),
-                            color: UIColors.backgroundLight,
+                            color: Colors.white.withOpacity(0.2),
+                            shape: BoxShape.circle,
                           ),
-                          margin: EdgeInsets.symmetric(
-                            horizontal: DimensManager.dimens.setWidth(20),
+                          padding: EdgeInsets.all(
+                              DimensManager.dimens.setWidth(30)),
+                          child: Icon(
+                            Icons.photo_camera_outlined,
+                            size: DimensManager.dimens.setSp(36),
+                            color: UIColors.primary,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const UIText(
-                                    'Last Scan',
-                                    color: Colors.white,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: DimensManager.dimens.setSp(24),
-                                      ))
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      flex: 4,
-                                      child: ClipRRect(
-                                        child: Image.asset(
-                                          AssetImages.living,
-                                          fit: BoxFit.fill,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            DimensManager.dimens.setRadius(5)),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Flexible(
-                                        flex: 8,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            UIText(
-                                              '19/11/2023',
-                                              color: UIColors.textDartLight,
-                                              size: DimensManager.dimens
-                                                  .setSp(14),
-                                            ),
-                                            SizedBox(
-                                              height: DimensManager.dimens
-                                                  .setHeight(5),
-                                            ),
-                                            UIText(
-                                              'It is a long established fact that a reader will be distracted by the readable content',
-                                              color: Colors.white,
-                                              size: DimensManager.dimens
-                                                  .setSp(18),
-                                              maxLines: 2,
-                                            ),
-                                            SizedBox(
-                                              height: DimensManager.dimens
-                                                  .setHeight(5),
-                                            ),
-                                            Row(
-                                              children: [
-                                                const UIText(
-                                                  'Cash back',
-                                                  color: Colors.white,
-                                                  size: 12,
-                                                ),
-                                                SizedBox(
-                                                  width: DimensManager.dimens
-                                                      .setWidth(10),
-                                                ),
-                                                const UIRichText(
-                                                  text: '32.000',
-                                                  size: 16,
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        ))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          color: UIColors.backgroundBlueNights,
                         ),
                       )
                     ],
                   ),
                 ),
-                panel: Container(
-                  color: UIColors.backgroundLight,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: DimensManager.dimens.setWidth(10)),
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: DimensManager.dimens.setWidth(20),
+                      vertical: DimensManager.dimens.setHeight(10),
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          DimensManager.dimens.setRadius(20)),
+                      border: Border.all(
+                        color: UIColors.primary,
+                        width: 1,
+                      ),
+                      color: Colors.white,
+                    ),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: DimensManager.dimens.setWidth(20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                             UIText(
+                              'Last Scan',
+                              color: UIColors.primary,
+                               fontWeight: FontWeight.bold,
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.close,
+                                  color: UIColors.primary,
+                                  size: DimensManager.dimens.setSp(24),
+                                ))
+                          ],
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.scans.value.length,
+                              itemBuilder: (BuildContext context,
+                                  int index) =>
+                                  Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: ClipRRect(
+                                      child: Image.memory(
+                                        controller.scans.value[index],
+                                        fit: BoxFit.fill,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          DimensManager.dimens.setRadius(5)),
+                                    ),
+                                  ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.white.withOpacity(0.8),
+                  ),
+                )
+              ],
+            ),
+          ),
+          panel: Container(
+            color: Colors.white.withOpacity(0.8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: UIColors.primary,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: DimensManager.dimens.setHeight(10),
@@ -208,97 +165,60 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         height: DimensManager.dimens.setHeight(20),
                       ),
-                      Expanded(
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15,
-                                  childAspectRatio: 7 / 8),
-                          itemBuilder: (_, index) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                  AssetImages.living,
-                                  fit: BoxFit.fill,
-                                  width: double.infinity,
-                                  height: 100,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    DimensManager.dimens.setRadius(5)),
-                              ),
-                              UIText(
-                                'It is a long established fact that a reader will be distracted by the readable content',
-                                color: UIColors.textDartLight,
-                                size: DimensManager.dimens.setSp(14),
-                                maxLines: 2,
-                              ),
-                              SizedBox(
-                                height: DimensManager.dimens.setHeight(5),
-                              ),
-                              UIRichText(
-                                text: '4.000.000',
-                                color: UIColors.textDartLight,
-                                size: 12,
-                              ),
-                              Row(
-                                children: [
-                                  const UIText(
-                                    'Cash back',
-                                    color: Colors.white,
-                                    size: 14,
-                                  ),
-                                  SizedBox(
-                                    width: DimensManager.dimens.setWidth(10),
-                                  ),
-                                  const UIRichText(
-                                    text: '32.000',
-                                    size: 14,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
-                panelHeader: Container(
-                    height: _panelMinSize,
-                    color: UIColors.backgroundLight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: DimensManager.dimens.setWidth(10)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: DimensManager.dimens.setHeight(10),
-                          ),
-                          Center(
-                            child: Container(
-                              width: 30,
-                              height: 3,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(
-                            height: DimensManager.dimens.setHeight(20),
-                          ),
-                          UIText(
-                            'Order history',
-                            size: DimensManager.dimens.setSp(20),
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ],
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    color: Colors.white.withOpacity(0.8),
+                    child: GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 5 / 8),
+                        itemBuilder: (BuildContext context, int index) =>
+                        const ItemComponent()),
+                  ),
+                  flex: 4,
+                )
+              ],
+            ),
+          ),
+          panelHeader: Container(
+              height: _panelMinSize,
+              color: UIColors.primary,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: DimensManager.dimens.setWidth(10)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: DimensManager.dimens.setHeight(10),
+                    ),
+                    Center(
+                      child: Container(
+                        width: 30,
+                        height: 3,
+                        color: Colors.white,
                       ),
-                    )),
-              ),
-      )),
+                    ),
+                    SizedBox(
+                      height: DimensManager.dimens.setHeight(20),
+                    ),
+                    UIText(
+                      'Order history',
+                      size: DimensManager.dimens.setSp(20),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      ),
     );
   }
 }
