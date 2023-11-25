@@ -23,7 +23,7 @@ class UIText extends StatelessWidget {
         this.strutStyle,
         this.maxLines,
         this.textAlign,
-        this.overflow,
+        this.overflow = TextOverflow.ellipsis,
         this.softWrap,
         this.color =  const Color(0xFF6E6E6E),
         this.size = 16,

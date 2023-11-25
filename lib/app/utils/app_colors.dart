@@ -8,7 +8,8 @@ class UIColors {
   static final Color backgroundBlueNights = HexColor.fromHex("#2f3542");
   static final Color colorButton = HexColor.fromHex("#a4b0be");
   static final Color defaultColorButton = HexColor.fromHex("#1e90ff");
-
+  static final Color backgroundLight = HexColor.fromHex("#34495e");
+  static final Color textDartLight = HexColor.fromHex("#ecf0f1");
 }
 
 extension HexColor on Color {
