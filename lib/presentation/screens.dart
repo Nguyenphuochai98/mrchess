@@ -1,0 +1,1 @@
+export 'package:mrchess/presentation/takephoto/takephoto.screen.dart';

@@ -22,27 +22,30 @@ class HomeView extends GetView<HomeController> {
       body: SafeArea(
         child: Column(
           children: [
-            Flexible(
+            Expanded(
               flex: 3,
               child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
                   child: Stack(
                     children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(
-                              DimensManager.dimens.setRadius(50),
+                      GestureDetector(
+                        onTap: controller.getImage,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(
+                                DimensManager.dimens.setRadius(50),
+                              ),
+                              bottomLeft: Radius.circular(
+                                DimensManager.dimens.setRadius(50),
+                              ),
                             ),
-                            bottomLeft: Radius.circular(
-                              DimensManager.dimens.setRadius(50),
+                            child: Image.asset(
+                              AssetImages.backgroundLens,
+                              fit: BoxFit.cover,
                             ),
-                          ),
-                          child: Image.asset(
-                            AssetImages.backgroundLens,
-                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -104,25 +107,44 @@ class HomeView extends GetView<HomeController> {
                     ],
                   )),
             ),
-            Flexible(
-              flex: 7,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: DimensManager.dimens.setWidth(20)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    UIText(
-                        UIStrings.messengerAccess,
-                      color: Colors.white,
-                      textAlign: TextAlign.center,
-                      size: DimensManager.dimens.setSp(20),
-                    ),
-                    SizedBox(height: DimensManager.dimens.setHeight(50),),
-                    const UIButton(title: UIStrings.allowAccess, radius: 10,)
-                  ],
-                ),
-              ),
-            ),
+            Expanded(
+                flex: 7,
+                child: Obx(() => controller.isLoading.value
+                    ? Center(
+                        child: CircularProgressIndicator(),)
+                    : ListView.builder(
+                        itemCount: controller.data.value?.data.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 100,
+                              color: Colors.white,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Image.network(
+                                      controller.data.value?.data[index].image ??
+                                          "",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        children: [
+                                          Text("name: ${controller.data.value?.data[index].name}"),
+                                        ],
+                                      )
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ))),
           ],
         ),
       ),
