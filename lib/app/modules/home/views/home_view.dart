@@ -6,7 +6,6 @@ import 'package:mrchess/app/utils/app_colors.dart';
 import 'package:mrchess/app/utils/asset_images.dart';
 import 'package:mrchess/app/widgets/ui_rich_text.dart';
 
-import '../../../constant/constants.dart';
 import '../../../widgets/ui_text.dart';
 import '../controllers/home_controller.dart';
 import 'package:we_slide/we_slide.dart';
