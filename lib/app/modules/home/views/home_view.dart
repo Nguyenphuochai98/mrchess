@@ -15,7 +15,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    const double _panelMinSize = 50.0;
+    const double _panelMinSize = 80.0;
     final double _panelMaxSize = MediaQuery.of(context).size.height;
     DimensManager();
     return Scaffold(
@@ -24,6 +24,7 @@ class HomeView extends GetView<HomeController> {
         child: WeSlide(
           panelMinSize: _panelMinSize,
           panelMaxSize: _panelMaxSize,
+          isUpSlide: true,
           body: Container(
             color: UIColors.backgroundBlueNights,
             child: Column(
@@ -253,19 +254,32 @@ class HomeView extends GetView<HomeController> {
           panelHeader: Container(
               height: _panelMinSize,
               color: UIColors.backgroundLight,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: DimensManager.dimens.setHeight(10),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 30,
-                      height: 3,
-                      color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: DimensManager.dimens.setWidth(10)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: DimensManager.dimens.setHeight(10),
                     ),
-                  ),
-                ],
+                    Center(
+                      child: Container(
+                        width: 30,
+                        height: 3,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: DimensManager.dimens.setHeight(20),
+                    ),
+                    UIText(
+                      'Order history',
+                      size: DimensManager.dimens.setSp(20),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
               )),
         ),
       ),
