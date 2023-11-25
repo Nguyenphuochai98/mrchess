@@ -1,16 +1,30 @@
+import 'dart:typed_data';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mrchess/app/routes/app_pages.dart';
 
 import '../provider/home_page_provider.dart';
+import '../provider/item_model.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
   TextEditingController textEditingController = TextEditingController();
   UserProvider userProvider = UserProvider();
+  RxBool isLoading = false.obs;
 
 
   Future<void> getImage()async {
-   await userProvider.getImage(1);
+    isLoading.value = true;
+    XFile file =await Get.toNamed(Routes.TAKE_PHOTO);
+    Uint8List bytes = await file.readAsBytes();
+    ProductResponse? dataResponse = await userProvider.getImage(bytes);
+    if(dataResponse != null){
+      await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
+    }
+
+    isLoading.value = false;
   }
 
   final count = 0.obs;
@@ -28,6 +42,4 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
