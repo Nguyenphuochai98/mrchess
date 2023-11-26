@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mrchess/app/utils/calculator.dart';
 import 'package:mrchess/app/widgets/ui_rich_text.dart';
 import 'package:mrchess/app/widgets/ui_text.dart';
 
@@ -9,9 +10,9 @@ import '../utils/asset_images.dart';
 import '../utils/assets_icons.dart';
 
 class ItemComponent extends StatefulWidget {
-  const ItemComponent({ Key? key}) : super(key: key);
-  // final Product product;
+  const ItemComponent({required this.product, Key? key}) : super(key: key);
 
+  final Product product;
   @override
   State<ItemComponent> createState() => _ItemComponentState();
 }
@@ -32,8 +33,8 @@ class _ItemComponentState extends State<ItemComponent> {
               topRight: Radius.circular(5),
               topLeft: Radius.circular(5),
             ),
-            child: Image.asset(
-              AssetImages.living,
+            child: Image.network(
+              widget.product.mainImage ?? '',
             ),
           ),const SizedBox(
             height: 2,
@@ -57,7 +58,7 @@ class _ItemComponentState extends State<ItemComponent> {
                   TextSpan(
                     //tên sản phầm
                     text:
-                        'Ấm Siêu Tốc Inox 1,8 Lít Đun Sôi Cực Nhanh - Bình siêu tốc inox tốt cho sức khỏe người sử dụng - ST2 New Hot',
+                        ' ${widget.product.name}',
                     style: TextStyle(
                         color: UIColors.textLight,
                         letterSpacing: 0.75,
@@ -77,7 +78,7 @@ class _ItemComponentState extends State<ItemComponent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                UIRichText(text: '4.000.000', color: UIColors.primary),
+                UIText( formatCurrency(widget.product.price ?? 0), color: UIColors.primary),
                 Row(
                   children: [
                     Icon(

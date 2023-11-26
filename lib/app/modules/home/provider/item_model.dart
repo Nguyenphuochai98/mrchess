@@ -9,18 +9,33 @@ class ProductResponse {
     List<Product> productList = (json['data'] as List)
         .map((productJson) => Product.fromJson(productJson))
         .toList();
-
+    productList = removeDuplicateProducts(productList);
     return ProductResponse(data: productList);
   }
+
+  static List<Product> removeDuplicateProducts(List<Product> products) {
+    Set<String> uniqueLinks = Set<String>();
+    List<Product> uniqueProducts = [];
+
+    for (Product product in products) {
+      if (!uniqueLinks.contains(product.link)) {
+        uniqueLinks.add(product.link!);
+        uniqueProducts.add(product);
+      }
+    }
+
+    return uniqueProducts;
+  }
+
 }
 
 class Product {
-  final String image;
-  final List<String> images;
-  final String mainImage;
-  final String name;
-  final int price;
-  final String link;
+  final String? image;
+  final List<String>? images;
+  final String? mainImage;
+  final String? name;
+  final double? price;
+  final String? link;
 
   Product({
     required this.image,
@@ -32,14 +47,16 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
-    List<String> imageList = (json['images'] as List).cast<String>();
-
+    List<String>? imageList ;
+    if(json['images'] != null){
+      imageList = (json['images'] as List).cast<String>();
+    }
     return Product(
       image: json['image'],
-      images: imageList,
+      images: imageList ?? [],
       mainImage: json['main_image'],
       name: json['name'],
-      price: json['price'],
+      price: int.tryParse(json['price'].toString())!  / 100000,
       link: json['link'],
     );
   }

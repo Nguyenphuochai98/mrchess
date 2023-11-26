@@ -108,15 +108,20 @@ class HomeView extends GetView<HomeController> {
                             itemCount: controller.scans.value.length,
                               itemBuilder: (BuildContext context,
                                   int index) =>
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: ClipRRect(
-                                      child: Image.memory(
-                                        controller.scans.value[index],
-                                        fit: BoxFit.fill,
+                                  GestureDetector(
+                                    onTap: (){
+                                      controller.findImage(controller.scans.value.reversed.toList()[index]);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: ClipRRect(
+                                        child: Image.memory(
+                                          controller.scans.value.reversed.toList()[index],
+                                          fit: BoxFit.fill,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                            DimensManager.dimens.setRadius(5)),
                                       ),
-                                      borderRadius: BorderRadius.circular(
-                                          DimensManager.dimens.setRadius(5)),
                                     ),
                                   ),
                           ),
@@ -169,18 +174,30 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    color: Colors.white.withOpacity(0.8),
-                    child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15,
-                            childAspectRatio: 5 / 8),
-                        itemBuilder: (BuildContext context, int index) =>
-                        const ItemComponent()),
-                  ),
+                  child: Obx((){
+                    if(controller.dataResponseHistory.value == null){
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if(controller.dataResponseHistory.value!.isEmpty){
+                      return const UIText("Not Have Data");
+                    }
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      color: Colors.white.withOpacity(0.8),
+                      child: GridView.builder(
+                        reverse: true,
+                        itemCount: controller.dataResponseHistory.value!.length,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 15,
+                              childAspectRatio: 5 / 8),
+                          itemBuilder: (BuildContext context, int index) =>
+                           ItemComponent(
+                            product: controller.dataResponseHistory.value![index],
+                          )),
+                    );
+                  }),
                   flex: 4,
                 )
               ],

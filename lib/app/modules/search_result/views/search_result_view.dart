@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:mrchess/app/utils/calculator.dart';
 
 import '../../../constant/dimens_manager.dart';
 import '../../../routes/app_pages.dart';
@@ -39,7 +40,7 @@ class SearchResultView extends GetView<SearchResultController> {
                               color: UIColors.primary,
                             ),
                             onPressed: () {
-                              Get.toNamed(Routes.HOME);
+                              Get.back();
                             },
                           ),
                           UIText('Product List',
@@ -66,9 +67,13 @@ class SearchResultView extends GetView<SearchResultController> {
                             itemBuilder: (_, index) {
                               Product product =
                                   controller.dataResponse.value!.data[index];
+                              int cashBackPer = generateRandomCashBack();
+                              double cashBack =
+                                  ((cashBackPer * product.price!) ~/ 100) * 1.0;
+
                               return GestureDetector(
                                 onTap: () {
-                                  controller.onItemClicked(product);
+                                  controller.onItemClicked(product,cashBackPer,cashBack);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -79,7 +84,7 @@ class SearchResultView extends GetView<SearchResultController> {
                                     children: [
                                       ClipRRect(
                                         child: Image.network(
-                                          product.mainImage,
+                                          product.image!,
                                           fit: BoxFit.fill,
                                           width: double.infinity,
                                           height: 180,
@@ -93,10 +98,10 @@ class SearchResultView extends GetView<SearchResultController> {
                                             horizontal: 5),
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             UIText(
-                                              product.name,
+                                              product.name!,
                                               color: UIColors.textLight,
                                               size: DimensManager.dimens
                                                   .setSp(14),
@@ -108,39 +113,22 @@ class SearchResultView extends GetView<SearchResultController> {
                                                   .setHeight(5),
                                             ),
                                             UIText(
-                                              controller.formatterRevenue(
-                                                  product.price),
-                                              fontWeight: FontWeight.bold,
+                                              formatCurrency(product.price!),
                                               color: UIColors.primary,
-                                              size: 16,
+                                              fontWeight: FontWeight.bold,
+                                              size: 14,
                                             ),
-                                            // UIRichText(
-                                            //   // text: product.price.toString(),
-                                            //   text: controller.formatterRevenue(product.price),
-                                            //   color: UIColors.primary,
-                                            //   size: 16,
-                                            // ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                UIText(
-                                                  'Cash back',
-                                                  color: UIColors.textLight,
-                                                  size: 14,
-                                                ),
-                                                SizedBox(
-                                                  width: DimensManager.dimens
-                                                      .setWidth(10),
-                                                ),
-                                                UIRichText(
-                                                  text: '32.000',
-                                                  size: 14,
-                                                  color: UIColors.primary,
-                                                ),
-                                              ],
-                                            )
+                                            UIText(
+                                              'Cash back (${cashBackPer}%):',
+                                              color: UIColors.shopee,
+                                              size: 14,
+                                            ),
+                                            UIText(
+                                              formatCurrency(cashBack),
+                                              size: 14,
+                                              color: UIColors.primary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ],
                                         ),
                                       )

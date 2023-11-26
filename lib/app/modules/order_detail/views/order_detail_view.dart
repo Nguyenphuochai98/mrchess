@@ -5,6 +5,7 @@ import 'package:mrchess/app/utils/app_colors.dart';
 import 'package:mrchess/app/widgets/item_components.dart';
 import 'package:mrchess/app/widgets/ui_text.dart';
 
+import '../../../utils/calculator.dart';
 import '../../home/provider/item_model.dart';
 import '../controllers/order_detail_controller.dart';
 
@@ -26,23 +27,33 @@ class OrderDetailView extends GetView<OrderDetailController> {
                         bottomRight: Radius.circular(40),
                         bottomLeft: Radius.circular(40)),
                     color: UIColors.primary),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SafeArea(
                       child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 5),
                         child: Row(
                           children: [
-                            Icon(Icons.arrow_back_ios, color: Colors.white),
-                            Spacer(),
-                            Icon(Icons.home, color: Colors.white),
+                            IconButton(
+                                icon: const Icon(Icons.arrow_back_ios,
+                                    color: Colors.white),
+                                onPressed: () {
+                                  Get.back();
+                                }),
+                            const Spacer(),
+                            IconButton(
+                                icon:
+                                    const Icon(Icons.home, color: Colors.white),
+                                onPressed: () {
+                                  Get.toNamed('/home');
+                                }),
                           ],
                         ),
                       ),
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -60,10 +71,10 @@ class OrderDetailView extends GetView<OrderDetailController> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
-                    UIText(
+                    const UIText(
                       'Your order has been successfully paid and is currently in the process of being refunded.',
                       color: Colors.white,
                       maxLines: 3,
@@ -73,32 +84,34 @@ class OrderDetailView extends GetView<OrderDetailController> {
                   ],
                 )),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: UIColors.shopee,
               ),
               margin: const EdgeInsets.symmetric(horizontal: 36, vertical: 5),
-              child: const Column(
+              child:  Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
-                  UIText(
+                  const UIText(
                     'Order Shopee ID',
                     color: Colors.white,
                     size: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   UIText(
-                    'Total amount: 1.000.000 VND',
+                    'Total amount: ${formatCurrency(controller.product.price ?? 0)}',
                     color: Colors.white,
                     size: 12,
                   ),
@@ -106,15 +119,7 @@ class OrderDetailView extends GetView<OrderDetailController> {
                     height: 6,
                   ),
                   UIText(
-                    'Total amount: 1.000.000',
-                    color: Colors.white,
-                    size: 12,
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  UIText(
-                    'Cash Back: 70.000VND(7%)',
+                    'Cash Back: ${controller.perTotal} VND(${controller.per}%)',
                     color: Colors.white,
                     size: 12,
                   ),
@@ -135,7 +140,7 @@ class OrderDetailView extends GetView<OrderDetailController> {
                       height: 36,
                     )),
               ),
-              UIText("Sucgestion For you", color: UIColors.primary),
+              UIText("Suggestion For you", color: UIColors.primary),
               Expanded(
                 child: Container(
                     margin: const EdgeInsets.only(left: 20.0, right: 10.0),
@@ -148,16 +153,24 @@ class OrderDetailView extends GetView<OrderDetailController> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 15,
-                      childAspectRatio: 5 / 8),
-                  itemBuilder: (BuildContext context, int index) =>
-                      const ItemComponent()),
-            ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : controller.recommandation.value != null ? GridView.builder(
+                    itemCount: controller.recommandation.value!.data
+                              .length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio: 5 / 8),
+                          itemBuilder: (BuildContext context, int index) =>
+                              ItemComponent(
+                                  product: controller
+                                      .recommandation.value!.data[index])) : UIText("Not Have Data"),
+                )),
             flex: 4,
           )
         ],

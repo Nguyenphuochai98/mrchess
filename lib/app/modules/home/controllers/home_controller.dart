@@ -14,13 +14,14 @@ class HomeController extends GetxController {
   UserProvider userProvider = UserProvider();
   RxBool isLoading = false.obs;
   Rx<List<Uint8List>> scans = Rx<List<Uint8List>>([]);
+  Rx<List<Product>?> dataResponseHistory = Rx<List<Product>?>(null);
 
   Future<void> getImage()async {
     isLoading.value = true;
     XFile file =await Get.toNamed(Routes.TAKE_PHOTO);
     Uint8List bytes = await file.readAsBytes();
     ProductResponse? dataResponse = await userProvider.getImage(bytes);
-    if(dataResponse != null){
+    if(dataResponse != null && dataResponse.data.isNotEmpty){
       userProvider.saveScans(bytes);
       scans.value = await userProvider.getScans();
       await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
@@ -28,14 +29,15 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  // Future<void> findImage()async {
-  //   ProductResponse? dataResponse = await userProvider.getImage(scans.value[0]);
-  //   if(dataResponse != null){
-  //     scans.value = await userProvider.getScans();
-  //     await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
-  //   }
-  //   isLoading.value = false;
-  // }
+  Future<void> findImage(Uint8List data)async {
+    isLoading.value = true;
+    ProductResponse? dataResponse = await userProvider.getImage(data);
+    if(dataResponse != null){
+      scans.value = await userProvider.getScans();
+      await Get.toNamed(Routes.SEARCH_RESULT,arguments: dataResponse);
+    }
+    isLoading.value = false;
+  }
 
 
 
@@ -44,7 +46,7 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     scans.value = await userProvider.getScans();
-
+    dataResponseHistory.value = await userProvider.getProductResponseHistory();
   }
 
   @override
